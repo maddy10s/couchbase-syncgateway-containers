@@ -1,0 +1,30 @@
+{
+  "interface": "0.0.0.0:4984",
+  "adminInterface": "127.0.0.1:4985",
+  "logging": {
+    "console": {
+      "enabled": true,
+      "log_level": "info",
+      "log_keys": ["CRUD", "REST+", "Access", "HTTP"]
+    }
+  },
+  "server_tls_skip_verify": false,
+  "use_tls_server": false,
+  "admin_interface_authentication": false,
+  "disable_persistent_config": true,
+  "databases": {
+    "pm": {
+      "server": "http://couchbase:8091",
+      "bucket": "pm",
+      "username": "admin",
+      "password": "password",
+      "users": {
+        "GUEST": {"disabled": true, "admin_channels": ["*"]}
+      },
+      "num_index_replicas": 0,
+      "sync": `function(doc, oldDoc) {
+        channel(doc.channels);
+      }`
+    }
+  }
+}
