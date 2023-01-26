@@ -1,0 +1,28 @@
+services:
+  couchbase:
+    build: ./couchbase
+    container_name: couchbase
+    volumes:
+      - ./docker-vol/couchbase:/opt/couchbase/var
+    environment:
+      - ADMIN_LOGIN=admin
+      - ADMIN_PASSWORD=password
+      - LOCAL_MODE=true
+      - MY_BUCKET_RAMSIZE=512
+    ports:
+      - 8091-8096:8091-8096
+      - 11210-11211:11210-11211
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8091"]
+      interval: 30s
+      retries: 3
+  sync-gateway:
+    build: ./syncgateway
+    container_name: sync-gateway
+    command: -adminInterface :4985 /etc/sync_gateway/config.json
+    ports:
+      - 4984:4984
+      - 4985:4985
+    depends_on:
+      couchbase:
+         condition: service_healthy #wait till couchbase is up and running
