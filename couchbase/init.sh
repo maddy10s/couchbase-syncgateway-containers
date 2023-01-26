@@ -95,11 +95,11 @@ if [ -z "$ANALYTICS_INDEX_RAM_QUOTA" ] ; then
 fi
 
 
-PM_BUCKET=pm
+MY_BUCKET=db
 
-if [ -z "$PM_BUCKET_RAMSIZE" ] ; then
-   echo "Missing pm bucket ramsize; setting to 256"
-   PM_BUCKET_RAMSIZE=256 ;
+if [ -z "$MY_BUCKET_RAMSIZE" ] ; then
+   echo "Missing db bucket ramsize; setting to 256"
+   MY_BUCKET_RAMSIZE=256 ;
 fi
 
 if [ -z "$SERVICES" ] ; then
@@ -186,15 +186,15 @@ else
 
     couchbase-cli bucket-list -c $HOST \
         -u "$ADMIN_LOGIN" -p "$ADMIN_PASSWORD"
-    PM_BUCKET_EXISTS=$(/opt/couchbase/bin/cbstats 127.0.0.1:11210 -b pm -u $ADMIN_LOGIN -p $ADMIN_PASSWORD config)
+    MY_BUCKET_EXISTS=$(/opt/couchbase/bin/cbstats 127.0.0.1:11210 -b db -u $ADMIN_LOGIN -p $ADMIN_PASSWORD config)
 
-    if [[ ${PM_BUCKET_EXISTS} == *"bucket does not exist"* ]]; then
+    if [[ ${MY_BUCKET_EXISTS} == *"bucket does not exist"* ]]; then
       echo "bucket does not exist, create one"
       couchbase-cli bucket-create -c $HOST \
               -u "$ADMIN_LOGIN" -p "$ADMIN_PASSWORD" \
-              --bucket=$PM_BUCKET \
+              --bucket=$MY_BUCKET \
               --bucket-type=couchbase \
-              --bucket-ramsize=$PM_BUCKET_RAMSIZE \
+              --bucket-ramsize=$MY_BUCKET_RAMSIZE \
               --wait
     fi
 
