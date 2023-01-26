@@ -1,6 +1,6 @@
 FROM couchbase/server:community-7.1.1
 
-LABEL MAINTAINER="Mobile Enterprise"
+LABEL MAINTAINER="smadankumar@yahoo.in"
 
 ENV ADMIN_LOGIN $ADMIN_LOGIN
 ENV ADMIN_PASSWORD $ADMIN_PASSWORD
