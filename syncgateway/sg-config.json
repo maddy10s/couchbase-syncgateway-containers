@@ -13,9 +13,9 @@
   "admin_interface_authentication": false,
   "disable_persistent_config": true,
   "databases": {
-    "pm": {
+    "db": {
       "server": "http://couchbase:8091",
-      "bucket": "pm",
+      "bucket": "db",
       "username": "admin",
       "password": "password",
       "users": {
